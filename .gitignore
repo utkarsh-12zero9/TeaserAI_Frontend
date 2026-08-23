@@ -1,0 +1,28 @@
+# Dependencies and Builds
+node_modules/
+dist/
+build/
+.next/
+
+# Environment configurations
+.env
+.env.local
+.env.*
+!.env.example
+
+# IDE and Editor settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# OS System Files
+.DS_Store
+Thumbs.db
+
+# Logs and Temporary files
+*.log
+README.md
