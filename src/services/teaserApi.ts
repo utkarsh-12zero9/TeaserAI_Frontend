@@ -8,8 +8,15 @@ export async function uploadVideoToBackend(file: File): Promise<{ success: boole
   formData.append(FILE_FIELD, file);
 
   try {
+    const token = localStorage.getItem('teaserai_token');
+    const headers: Record<string, string> = {};
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const response = await fetch(`${BASE_URL}/videos/upload`, {
       method: 'POST',
+      headers,
       body: formData,
     });
 
@@ -152,8 +159,15 @@ export async function processVideoTeaser(
   }, 400);
 
   try {
+    const token = localStorage.getItem('teaserai_token');
+    const headers: Record<string, string> = {};
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`;
+    }
+
     const response = await fetch(url, {
       method: 'POST',
+      headers,
       body: formData,
     });
 
