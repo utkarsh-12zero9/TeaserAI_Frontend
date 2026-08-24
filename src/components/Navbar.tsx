@@ -23,21 +23,12 @@ export const Navbar: React.FC = () => {
   return (
     <header className="navbar-wrapper">
       <div className="navbar-container">
-        <Link to="/" className="brand-logo">
-          <div className="brand-icon">
-            <Film size={18} />
-          </div>
-          <span className="brand-text">
-            Teaser<span style={{ color: 'var(--primary-pink)' }}>AI</span>
-          </span>
+        <Link to="/" className="brand-logo" style={{ display: 'flex', alignItems: 'center' }}>
+          <img src="/Nav_Logo.jpg" alt="TeaserAI Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain', borderRadius: '4px' }} />
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="nav-links desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <Link to="/" className="btn-secondary nav-home-btn" style={{ background: 'transparent', border: 'none' }}>
-            Home
-          </Link>
-          
           {user ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               {!isGenerator && (
@@ -101,9 +92,7 @@ export const Navbar: React.FC = () => {
       {/* Mobile Dropdown Menu Overlay */}
       {mobileMenuOpen && (
         <nav className="mobile-menu-dropdown" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1.5rem' }}>
-          <Link to="/" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
-            Home
-          </Link>
+          
           
           {user ? (
             <>
