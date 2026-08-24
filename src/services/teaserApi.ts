@@ -127,36 +127,45 @@ export async function processVideoTeaser(
     formData.append('prompt', 'Summarize the video in 3 sentences.');
   }
 
-  // Interval timer to simulate progress stages during the blocking call
-  let progressStep = 0;
+  const videoId = 'vid_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  formData.append('video_id', videoId);
+
   type StepType = 'uploading' | 'extracting_audio' | 'speech_to_text' | 'analyzing_moments' | 'clipping_teaser';
-  const stages: { step: StepType; limit: number }[] = [
-    { step: 'uploading', limit: 20 },
-    { step: 'extracting_audio', limit: 45 },
-    { step: 'speech_to_text', limit: 70 },
-    { step: 'analyzing_moments', limit: 90 },
-    { step: 'clipping_teaser', limit: 98 }
-  ];
-
+  let currentStep: StepType = 'uploading';
   let currentPercent = 5;
-  const timer = setInterval(() => {
-    const currentStage = stages[progressStep];
-    if (!currentStage) return;
+  let isCompleted = false;
 
-    if (currentPercent < currentStage.limit) {
-      currentPercent += Math.floor(Math.random() * 3) + 1;
-      if (currentPercent > currentStage.limit) {
-        currentPercent = currentStage.limit;
+  let targetPercent = 5;
+  const timer = setInterval(async () => {
+    try {
+      // Smooth dynamic progress interpolation
+      if (currentPercent < targetPercent) {
+        currentPercent += Math.min(2, targetPercent - currentPercent);
+        onProgress(currentStep, currentPercent);
+      } else if (currentPercent < 96 && (currentStep === 'analyzing_moments' || currentStep === 'clipping_teaser' || currentStep === 'extracting_audio')) {
+        // Subtle micro-tick to reflect continuous background activity
+        currentPercent += 1;
+        onProgress(currentStep, currentPercent);
       }
-      onProgress(currentStage.step, currentPercent);
-    } else {
-      // Advance to next stage
-      if (progressStep < stages.length - 1) {
-        progressStep++;
-        onProgress(stages[progressStep].step, currentPercent);
+
+      const res = await fetch(`${BASE_URL}/videos/${videoId}/status`);
+      if (isCompleted) return;
+      if (res.ok) {
+        const data = await res.json();
+        if (isCompleted) return;
+        if (data.step && data.step !== 'idle') {
+          currentStep = data.step as StepType;
+          targetPercent = Math.max(targetPercent, data.percent);
+          if (data.percent > currentPercent) {
+            currentPercent = data.percent;
+          }
+          onProgress(currentStep, currentPercent);
+        }
       }
+    } catch (err) {
+      // Ignore
     }
-  }, 400);
+  }, 350);
 
   try {
     const token = localStorage.getItem('teaserai_token');
@@ -171,6 +180,7 @@ export async function processVideoTeaser(
       body: formData,
     });
 
+    isCompleted = true;
     clearInterval(timer);
 
     if (!response.ok) {
