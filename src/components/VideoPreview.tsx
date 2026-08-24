@@ -26,9 +26,11 @@ export const VideoPreview: React.FC<VideoPreviewProps> = ({ result, onReset }) =
       if (isPlaying) {
         videoRef.current.pause();
       } else {
-        videoRef.current.play().catch(e => console.log(e));
+        videoRef.current.play().catch(e => {
+          console.error('Unable to play teaser:', e);
+          setIsPlaying(false);
+        });
       }
-      setIsPlaying(!isPlaying);
     }
   };
 
@@ -107,9 +109,13 @@ export const VideoPreview: React.FC<VideoPreviewProps> = ({ result, onReset }) =
             src={result.videoUrl}
             className="custom-video-player"
             onTimeUpdate={handleTimeUpdate}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
             onEnded={() => setIsPlaying(false)}
+            onVolumeChange={(event) => setIsMuted(event.currentTarget.muted)}
             playsInline
             loop
+            controls
           />
 
           {/* Player Overlay Controls */}
