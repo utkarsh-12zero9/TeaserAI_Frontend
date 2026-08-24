@@ -69,10 +69,10 @@ export const Navbar: React.FC = () => {
             </div>
           ) : (
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-              <Link to="/login" className="btn-secondary" style={{ padding: '0.4rem 1rem', borderRadius: '8px', fontSize: '0.9rem' }}>
+              <Link to="/login" className="btn-secondary" style={{ padding: '0.45rem 1.25rem', borderRadius: '999px', fontSize: '0.88rem', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
                 Sign In
               </Link>
-              <Link to="/register" className="btn-primary nav-cta" style={{ padding: '0.4rem 1rem', borderRadius: '8px', fontSize: '0.9rem' }}>
+              <Link to="/register" className="btn-primary nav-cta" style={{ padding: '0.45rem 1.25rem', borderRadius: '999px', fontSize: '0.88rem' }}>
                 Sign Up
               </Link>
             </div>
@@ -140,7 +140,7 @@ export const Navbar: React.FC = () => {
               <Link
                 to="/login"
                 className="btn-secondary"
-                style={{ display: 'flex', justifyContent: 'center', padding: '0.6rem 1rem', borderRadius: '8px' }}
+                style={{ display: 'flex', justifyContent: 'center', padding: '0.6rem 1rem', borderRadius: '999px', border: '1px solid rgba(255, 255, 255, 0.2)' }}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Sign In
@@ -148,7 +148,7 @@ export const Navbar: React.FC = () => {
               <Link
                 to="/register"
                 className="btn-primary"
-                style={{ display: 'flex', justifyContent: 'center', padding: '0.6rem 1rem', borderRadius: '8px' }}
+                style={{ display: 'flex', justifyContent: 'center', padding: '0.6rem 1rem', borderRadius: '999px' }}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Sign Up

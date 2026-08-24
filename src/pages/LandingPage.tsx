@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Sparkles, ArrowRight, Video, Scissors } from 'lucide-react';
+import { useAuth } from '../components/AuthContext';
 
 export const LandingPage: React.FC = () => {
+  const { user } = useAuth();
+
   return (
     <div style={{ paddingTop: '2.5rem', paddingBottom: '5rem' }}>
       {/* Topographic Background Overlay */}
@@ -51,13 +54,15 @@ export const LandingPage: React.FC = () => {
           Upload your raw video, let our backend extract speech-to-text transcripts, identify peak viral moments, and automatically slice a ready-to-share teaser.
         </p>
 
-        <div className="hero-actions" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+        <div className="hero-actions" style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
           <Link to="/generator" className="btn-primary">
             <Sparkles size={18} /> Get Started Now <ArrowRight size={18} />
           </Link>
-          {/* <a href="#how-it-works" className="btn-secondary">
-            Learn How It Works
-          </a> */}
+          {!user && (
+            <Link to="/login" className="btn-secondary" style={{ padding: '0.85rem 2rem', borderRadius: '999px', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
+              Sign In
+            </Link>
+          )}
         </div>
       </section>
 
@@ -65,7 +70,7 @@ export const LandingPage: React.FC = () => {
       <section className="container" style={{ marginBottom: '4rem' }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <h2 style={{ fontSize: '1.85rem', marginBottom: '0.5rem', color: '#ffffff' }}>
-            Built for <span className="gradient-text-cyan">Creators & Editors</span>
+            Built for <span style={{ background: 'linear-gradient(135deg, var(--primary-pink) 0%, #ffffff 50%, var(--primary-cyan) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Everyone</span>
           </h2>
           <p style={{ color: 'var(--text-muted)' }}>
             Streamlined pipeline from long-form content to short viral highlights
@@ -120,22 +125,111 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="container">
+      <section id="how-it-works" className="container" style={{ position: 'relative', marginTop: '5rem', marginBottom: '3rem' }}>
+        {/* Glow Effects behind the card */}
+        <div style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '80%',
+          height: '160px',
+          background: 'radial-gradient(ellipse, rgba(236, 72, 153, 0.22) 0%, rgba(6, 182, 212, 0.22) 50%, transparent 100%)',
+          filter: 'blur(60px)',
+          zIndex: -1,
+          pointerEvents: 'none'
+        }} />
+
         <div
           className="glass-card"
           style={{
-            background: 'linear-gradient(135deg, rgba(147, 51, 234, 0.12) 0%, rgba(6, 182, 212, 0.08) 100%)',
-            borderColor: 'var(--border-neon)',
-            padding: '2.5rem 1.5rem',
+            background: 'linear-gradient(135deg, rgba(13, 15, 23, 0.8) 0%, rgba(26, 20, 48, 0.6) 100%)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            boxShadow: '0 24px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(147, 51, 234, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+            padding: '4rem 2rem',
             textAlign: 'center',
+            borderRadius: '24px',
+            position: 'relative',
+            overflow: 'hidden',
           }}
         >
-          <h2 style={{ fontSize: '1.85rem', marginBottom: '0.85rem', color: '#ffffff' }}>Ready to Generate Your Cool Teaser?</h2>
-          <p style={{ color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto 1.75rem', fontSize: '0.95rem' }}>
-            No complicated setup. Just Upload your file directly and get a cool teaser video preview in seconds.
+          {/* Decorative floating gradient glows inside the card */}
+          <div style={{
+            position: 'absolute',
+            top: '-30px',
+            right: '-30px',
+            width: '120px',
+            height: '120px',
+            background: 'var(--primary-pink)',
+            filter: 'blur(80px)',
+            opacity: 0.35,
+            pointerEvents: 'none'
+          }} />
+          <div style={{
+            position: 'absolute',
+            bottom: '-30px',
+            left: '-30px',
+            width: '120px',
+            height: '120px',
+            background: 'var(--primary-cyan)',
+            filter: 'blur(80px)',
+            opacity: 0.35,
+            pointerEvents: 'none'
+          }} />
+
+          {/* Rotating Sparkle Icon Badge */}
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '52px',
+            height: '52px',
+            borderRadius: '16px',
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)',
+            color: 'var(--primary-pink)',
+            marginBottom: '1.5rem',
+            transform: 'rotate(-6deg)',
+          }}>
+            <Sparkles size={24} style={{ filter: 'drop-shadow(0 0 8px rgba(236, 72, 153, 0.5))' }} />
+          </div>
+
+          <h2 style={{
+            fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+            marginBottom: '1rem',
+            color: '#ffffff',
+            lineHeight: 1.2,
+            letterSpacing: '-0.02em',
+            fontFamily: 'var(--font-display)'
+          }}>
+            Ready to Generate Your <span className="gradient-text">Cool Teaser?</span>
+          </h2>
+
+          <p style={{
+            color: 'var(--text-muted)',
+            maxWidth: '580px',
+            margin: '0 auto 2.25rem',
+            fontSize: 'clamp(0.9rem, 1.5vw, 1.05rem)',
+            lineHeight: 1.6
+          }}>
+            No complicated timelines or technical setups. Just drag and drop your raw video directly into our studio generator and let the AI extract viral highlights in seconds.
           </p>
+
           <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <Link to="/generator" className="btn-primary" style={{ padding: '0.9rem 2.2rem', fontSize: '1rem' }}>
+            <Link
+              to="/generator"
+              className="btn-primary"
+              style={{
+                padding: '1rem 2.5rem',
+                fontSize: '1.05rem',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.75rem',
+                borderRadius: '999px',
+                boxShadow: '0 8px 30px rgba(236, 72, 153, 0.45)',
+              }}
+            >
               Open Studio Generator <ArrowRight size={18} />
             </Link>
           </div>
