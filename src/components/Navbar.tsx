@@ -24,7 +24,7 @@ export const Navbar: React.FC = () => {
     <header className="navbar-wrapper">
       <div className="navbar-container">
         <Link to="/" className="brand-logo" style={{ display: 'flex', alignItems: 'center' }}>
-          <img src="/Nav_Logo.jpg" alt="TeaserAI Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain', borderRadius: '4px' }} />
+          <img src="/Nav_Logo.jpg" alt="TeaserAI Logo" style={{ height: '42px', width: 'auto', objectFit: 'contain', borderRadius: '4px' }} />
         </Link>
 
         {/* Desktop Navigation */}
@@ -92,8 +92,8 @@ export const Navbar: React.FC = () => {
       {/* Mobile Dropdown Menu Overlay */}
       {mobileMenuOpen && (
         <nav className="mobile-menu-dropdown" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', padding: '1.5rem' }}>
-          
-          
+
+
           {user ? (
             <>
               <Link to="/generator" className="mobile-nav-link" onClick={() => setMobileMenuOpen(false)}>
