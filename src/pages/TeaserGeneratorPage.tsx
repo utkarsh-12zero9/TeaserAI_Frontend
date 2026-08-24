@@ -6,8 +6,10 @@ import { ProcessingStatus, PipelineStep, SelectedVideoInfo, TeaserResult } from 
 import { processVideoTeaser } from '../services/teaserApi';
 import { ArrowLeft, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../components/AuthContext';
 
 export const TeaserGeneratorPage: React.FC = () => {
+  const { token } = useAuth();
   const [status, setStatus] = useState<ProcessingStatus>('INITIAL');
   const [selectedVideo, setSelectedVideo] = useState<SelectedVideoInfo | null>(null);
   const [pipelineStep, setPipelineStep] = useState<PipelineStep>('idle');
@@ -41,7 +43,7 @@ export const TeaserGeneratorPage: React.FC = () => {
 
     try {
       let isDone = false;
-      const result = await processVideoTeaser(selectedVideo, (step, percent) => {
+      const result = await processVideoTeaser(selectedVideo, token, (step, percent) => {
         if (isDone) return;
         if (step === 'uploading') setStatus('UPLOADING');
         else setStatus('PROCESSING');
