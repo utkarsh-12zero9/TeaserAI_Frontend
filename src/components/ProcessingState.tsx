@@ -8,6 +8,11 @@ interface ProcessingStateProps {
 }
 
 export const ProcessingState: React.FC<ProcessingStateProps> = ({ currentStep, progressPercent }) => {
+  const safePercent = Math.min(
+    100,
+    Math.max(0, typeof progressPercent === 'number' && !isNaN(progressPercent) ? progressPercent : 0)
+  );
+
   const steps: { key: PipelineStep; label: string; icon: React.ReactNode }[] = [
     { key: 'uploading', label: 'Uploading video file', icon: <Cpu size={16} /> },
     { key: 'extracting_audio', label: 'Extracting audio track', icon: <Music size={16} /> },
@@ -40,10 +45,10 @@ export const ProcessingState: React.FC<ProcessingStateProps> = ({ currentStep, p
           </p>
 
           <div className="progress-bar-container">
-            <div className="progress-bar-fill" style={{ width: `${progressPercent}%` }} />
+            <div className="progress-bar-fill" style={{ width: `${safePercent}%` }} />
           </div>
           <span style={{ fontSize: '0.75rem', color: 'var(--primary-cyan)', fontWeight: 600 }}>
-            {progressPercent}%
+            {safePercent}%
           </span>
 
           {/* Pipeline Step List */}
