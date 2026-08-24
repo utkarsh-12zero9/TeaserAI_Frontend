@@ -40,7 +40,9 @@ export const TeaserGeneratorPage: React.FC = () => {
     setErrorMessage(null);
 
     try {
+      let isDone = false;
       const result = await processVideoTeaser(selectedVideo, (step, percent) => {
+        if (isDone) return;
         if (step === 'uploading') setStatus('UPLOADING');
         else setStatus('PROCESSING');
 
@@ -48,6 +50,7 @@ export const TeaserGeneratorPage: React.FC = () => {
         setProgressPercent(percent);
       });
 
+      isDone = true;
       setTeaserResult(result);
       setStatus('SUCCESS');
       setPipelineStep('complete');
