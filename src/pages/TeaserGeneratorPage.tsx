@@ -93,7 +93,7 @@ export const TeaserGeneratorPage: React.FC = () => {
       )}
 
       {/* Main Content Card */}
-      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <div className="fade-in" style={{ maxWidth: '800px', margin: '0 auto' }}>
         {(status === 'INITIAL' || status === 'VIDEO_SELECTED' || status === 'ERROR') && (
           <VideoUploader
             selectedVideo={selectedVideo}
