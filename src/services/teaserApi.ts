@@ -1,6 +1,6 @@
 import { TeaserResult, SelectedVideoInfo } from '../types/teaser';
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const BASE_URL = import.meta.env.API_BASE_URL || 'http://localhost:8000';
 const FILE_FIELD = import.meta.env.VITE_API_FILE_FIELD || 'file';
 
 export async function uploadVideoToBackend(file: File, token: string | null): Promise<{ success: boolean; videoId?: string; message?: string }> {
