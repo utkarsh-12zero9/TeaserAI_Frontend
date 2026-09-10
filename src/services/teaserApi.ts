@@ -129,7 +129,7 @@ export async function processVideoTeaser(
   if (videoInfo.customPrompt) {
     formData.append('prompt', videoInfo.customPrompt);
   } else if (videoInfo.youtubeUrl) {
-    formData.append('prompt', 'Summarize the video in 3 sentences.');
+    formData.append('prompt', 'Generate a teaser for this vedio.');
   }
 
   const videoId = 'vid_' + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
